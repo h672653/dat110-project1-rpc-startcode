@@ -1,15 +1,15 @@
 package no.hvl.dat110.rpc;
 
 import no.hvl.dat110.TODO;
+
 import no.hvl.dat110.messaging.*;
 
 public class RPCClient {
 
-	// underlying messaging client used for RPC communication
-	private MessagingClient msgclient;
+	
 
-	// underlying messaging connection used for RPC communication
-	private MessageConnection connection;
+	private MessagingClient msgclient;
+    private MessageConnection connection;
 	
 	public RPCClient(String server, int port) {
 	
@@ -18,40 +18,30 @@ public class RPCClient {
 	
 	public void connect() {
 		
-		// TODO - START
-		// connect using the RPC client
+		connection = msgclient.connect();
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
 	}
 	
 	public void disconnect() {
 		
-		// TODO - START
-		// disconnect by closing the underlying messaging connection
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		connection.close();
 	}
 
-	/*
-	 Make a remote call om the method on the RPC server by sending an RPC request message and receive an RPC reply message
+	
 
-	 rpcid is the identifier on the server side of the method to be called
-	 param is the marshalled parameter of the method to be called
-	 */
-
-	public byte[] call(byte rpcid, byte[] param) {
+	public byte[] call(byte rpcid, byte[] params) {
 		
 		byte[] returnval = null;
 		
-		// TODO - START
+		connection.send(new Message(RPCUtils.encapsulate(rpcid, params)));
+		returnval = RPCUtils.decapsulate(connection.receive().getData());
+		
 
 		/*
+		 *  Make a remote call om the method on the RPC server by sending an RPC request message and receive an RPC reply message
+
+	 rpcid is the identifier on the server side of the method to be called
+	 param is the marshalled parameter of the method to be called
 
 		The rpcid and param must be encapsulated according to the RPC message format
 
@@ -59,10 +49,7 @@ public class RPCClient {
 
 		*/
 				
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
 		
-		// TODO - END
 		return returnval;
 		
 	}

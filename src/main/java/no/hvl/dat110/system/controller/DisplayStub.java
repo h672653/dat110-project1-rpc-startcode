@@ -5,6 +5,8 @@ import no.hvl.dat110.rpc.*;
 
 public class DisplayStub extends RPCLocalStub {
 
+private byte RPCIDDISPLAY = 2;
+	
 	public DisplayStub(RPCClient rpcclient) {
 		super(rpcclient);
 	}
@@ -15,8 +17,11 @@ public class DisplayStub extends RPCLocalStub {
 		
 		// implement marshalling, call and unmarshalling for write RPC method
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+
+		byte[] request = RPCUtils.marshallString(message);
+		byte[] response = rpcclient.call(RPCIDDISPLAY, request);
+		RPCUtils.unmarshallString(response);
+
 		
 		// TODO - END
 		

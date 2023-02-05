@@ -2,6 +2,7 @@ package no.hvl.dat110.messaging;
 
 
 import java.io.DataInputStream;
+import static no.hvl.dat110.messaging.MessageUtils.SEGMENTSIZE;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -49,15 +50,29 @@ public class MessageConnection {
 	public Message receive() {
 
 		Message message = null;
-		byte[] data;
 		
-		// TODO - START
-		// read a segment from the input stream and decapsulate data into a Message
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+		byte[] data = new byte[SEGMENTSIZE];
+
 		
-		// TODO - END
+		try {
+			data = inStream.readNBytes(SEGMENTSIZE);
+			message = MessageUtils.decapsulate(data);
+			
+			
+		//	data = MessageUtils.decapsulate(inStream.readAllBytes()).getData();
+  		   
+		//	message = new Message(data);
+			
+		} catch (IOException ex){
+
+			System.out.println("Connection: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+;
+		
+		
+		
 		
 		return message;
 		
